@@ -1,6 +1,6 @@
 class HashMap {
   constructor() {
-    this.memory = {};
+    this.memory = [];
     this.memSize = 8;
   }
 
@@ -15,30 +15,29 @@ class HashMap {
     return hashCode;
   }
   set(key, value) {
-    this.memory[key] = value;
+    this.memory[this.hash(key)] = { key, value };
+
+    return;
   }
   get(key) {
-    return this.memory[key];
+    return this.memory[this.hash(key)];
   }
   has(key) {
-    return this.memory.hasOwnProperty(key);
+    return this.memory[this.hash(key) != undefined];
   }
   remove(key) {
-    delete this.memory[key];
+    this.memory.splice(this.hash(key), 1);
+    this.memory.length = this.memSize;
   }
   clear() {
-    this.memory = {};
+    this.memory = [];
   }
 }
 
 const myHashMap = new HashMap();
-myHashMap.set(`Uria`, `OldValue`);
-myHashMap.set(`Uria`, `NewValue`);
+myHashMap.set(`Uria`, 35);
 myHashMap.set(`Irina`, 32);
-console.log(myHashMap.get(`Uria`));
-console.log(myHashMap.has(`Uria`));
-console.log(myHashMap.has(`Agrajag`));
+myHashMap.set(`asdfgqwerty`, 32);
+console.log(myHashMap.memory);
 myHashMap.remove(`Irina`);
 console.log(myHashMap.memory);
-myHashMap.clear();
-console.log(myHashMap);
