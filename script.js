@@ -1,4 +1,4 @@
-class HashMap {
+export class HashMap {
   constructor(loadFactor) {
     this.loadFactor = loadFactor;
     this.memory = [];
