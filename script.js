@@ -1,7 +1,9 @@
 class HashMap {
   constructor() {
     this.memory = [];
-    this.memSize = 8;
+    this.length = 0;
+    this.memSize = 16;
+    this.memory.length = this.memSize;
   }
 
   hash(key) {
@@ -16,7 +18,7 @@ class HashMap {
   }
   set(key, value) {
     this.memory[this.hash(key)] = { key, value };
-
+    this.length = this.length + 1;
     return;
   }
   get(key) {
@@ -35,15 +37,42 @@ class HashMap {
     }
     this.memory.splice(this.hash(key), 1);
     this.memory.length = this.memSize;
+    this.length = this.length - 1;
     return true;
   }
   clear() {
     this.memory = [];
   }
-  length() {}
-  keys() {}
-  values() {}
-  entries() {}
+  length() {
+    return this.length;
+  }
+  keys() {
+    let arr = [];
+    for (let i = 0; i < this.memory.length; i++) {
+      if (this.memory[i] != null) {
+        arr.push(this.memory[i].key);
+      }
+    }
+    return arr;
+  }
+  values() {
+    let arr = [];
+    for (let i = 0; i < this.memory.length; i++) {
+      if (this.memory[i] != null) {
+        arr.push(this.memory[i].value);
+      }
+    }
+    return arr;
+  }
+  entries() {
+    let arr = [];
+    for (let i = 0; i < this.memory.length; i++) {
+      if (this.memory[i] != null) {
+        arr.push(this.memory[i]);
+      }
+    }
+    return arr;
+  }
 }
 
 const myHashMap = new HashMap();
@@ -51,5 +80,11 @@ myHashMap.set(`Uria`, 35);
 myHashMap.set(`Irina`, 32);
 myHashMap.set(`asdfgqwerty`, 32);
 console.log(myHashMap.memory);
-myHashMap.remove(`Irina`);
+console.log(myHashMap.length);
+console.log(myHashMap.remove(`Irina`));
+console.log(myHashMap.remove(`Irina`));
 console.log(myHashMap.memory);
+console.log(myHashMap.length);
+console.log(myHashMap.keys());
+console.log(myHashMap.values());
+console.log(myHashMap.entries());
