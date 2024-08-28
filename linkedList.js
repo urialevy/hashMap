@@ -1,6 +1,7 @@
 export class Node {
-  constructor(value, nextNode) {
+  constructor(value, key, nextNode) {
     this.value = value;
+    this.key = key;
     this.nextNode = null;
   }
 }
@@ -150,21 +151,21 @@ export class LinkedList {
     }
     return `"${value}" not found in list`;
   }
-  insertAt(value, index){
+  insertAt(value, index) {
     if (index < 0) {
-      const err = new Error(`Cannot insert at negative index`)
-      throw err
+      const err = new Error(`Cannot insert at negative index`);
+      throw err;
     }
     let newNode = new Node(value, null);
     let previousNode;
     if (index == 0) {
-      newNode.nextNode = this.head
-      this.head = newNode
-      return
+      newNode.nextNode = this.head;
+      this.head = newNode;
+      return;
     }
     let count = 0;
-    let currentNode = this.head
-    while(currentNode) {
+    let currentNode = this.head;
+    while (currentNode) {
       if (count == index) {
         if (currentNode.nextNode === null) {
           currentNode.nextNode = newNode;
@@ -172,51 +173,50 @@ export class LinkedList {
         }
         previousNode.nextNode = newNode;
         newNode.nextNode = currentNode;
-        return
-        
+        return;
       }
       previousNode = currentNode;
-      currentNode = currentNode.nextNode
-      count = count+1;
+      currentNode = currentNode.nextNode;
+      count = count + 1;
     }
-    const err = new Error(`index ${index} exceeds list length`)
-    throw err
+    const err = new Error(`index ${index} exceeds list length`);
+    throw err;
   }
-  removeAt(index){
+  removeAt(index) {
     if (this.head == null) {
-      const err = new Error(`Cannot remove from empty list`)
+      const err = new Error(`Cannot remove from empty list`);
       throw err;
     }
     if (index < 0) {
-      const err = new Error(`Cannot insert at negative index`)
-      throw err
+      const err = new Error(`Cannot insert at negative index`);
+      throw err;
     }
     if (index == 0) {
       this.head = this.head.nextNode;
-      return
+      return;
     }
-    let currentNode = this.head
+    let currentNode = this.head;
     let previousNode;
     let newNextNode;
-    let count = 0
+    let count = 0;
     while (currentNode) {
       if (count == index) {
         if (currentNode.nextNode == null) {
-          console.log(`final node`)
+          console.log(`final node`);
           previousNode.nextNode = null;
           currentNode = null;
-          return
+          return;
         }
         previousNode.nextNode = newNextNode;
         currentNode = null;
-        return
+        return;
       }
       previousNode = currentNode;
-      currentNode = currentNode.nextNode
-      newNextNode = currentNode.nextNode
-      count = count+1;
+      currentNode = currentNode.nextNode;
+      newNextNode = currentNode.nextNode;
+      count = count + 1;
     }
-    const err = new Error(`index ${index} exceeds list length`)
-    throw err
+    const err = new Error(`index ${index} exceeds list length`);
+    throw err;
   }
 }
