@@ -20,18 +20,30 @@ class HashMap {
     return;
   }
   get(key) {
+    if (this.memory[this.hash(key)] == undefined) {
+      return null;
+    }
     return this.memory[this.hash(key)];
   }
   has(key) {
     return this.memory[this.hash(key) != undefined];
   }
   remove(key) {
+    let index = this.hash(key);
+    if (this.memory[index] == null) {
+      return false;
+    }
     this.memory.splice(this.hash(key), 1);
     this.memory.length = this.memSize;
+    return true;
   }
   clear() {
     this.memory = [];
   }
+  length() {}
+  keys() {}
+  values() {}
+  entries() {}
 }
 
 const myHashMap = new HashMap();
