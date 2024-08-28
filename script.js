@@ -1,11 +1,19 @@
 class HashMap {
-  constructor() {
+  constructor(loadFactor) {
+    this.loadFactor = loadFactor;
     this.memory = [];
     this.length = 0;
-    this.memSize = 16;
+    this.memSize = 2;
     this.memory.length = this.memSize;
   }
-
+  checkLoad() {
+    if (this.length >= Math.ceil(this.memSize * this.loadFactor)) {
+      this.memSize = this.memSize * 2;
+      this.memory.length = this.memSize;
+      return true;
+    }
+    return false;
+  }
   hash(key) {
     let hashCode = 0;
 
@@ -17,6 +25,11 @@ class HashMap {
     return hashCode;
   }
   set(key, value) {
+    this.checkLoad();
+    if (this.memory[this.hash(key)] != null) {
+      console.log(`collision`);
+      return;
+    }
     this.memory[this.hash(key)] = { key, value };
     this.length = this.length + 1;
     return;
@@ -75,16 +88,14 @@ class HashMap {
   }
 }
 
-const myHashMap = new HashMap();
+const myHashMap = new HashMap(0.75);
 myHashMap.set(`Uria`, 35);
+console.log(myHashMap);
 myHashMap.set(`Irina`, 32);
+console.log(myHashMap);
 myHashMap.set(`asdfgqwerty`, 32);
-console.log(myHashMap.memory);
-console.log(myHashMap.length);
-console.log(myHashMap.remove(`Irina`));
-console.log(myHashMap.remove(`Irina`));
-console.log(myHashMap.memory);
-console.log(myHashMap.length);
-console.log(myHashMap.keys());
-console.log(myHashMap.values());
-console.log(myHashMap.entries());
+console.log(myHashMap);
+myHashMap.set(`Uria`, 35);
+console.log(myHashMap);
+myHashMap.set(`Irina`, 32);
+console.log(myHashMap);
