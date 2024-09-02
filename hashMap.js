@@ -5,7 +5,7 @@ export class HashMap {
     this.loadFactor = 0.75;
     this.memory = [];
     this.length = 0;
-    this.memSize = 8;
+    this.memSize = 16;
     this.memory.length = this.memSize;
     this.completeLength = 0;
   }
@@ -36,28 +36,28 @@ export class HashMap {
         newMem.push(this.memory[i].retrieve());
         i = i + 1;
       }
+      console.log(newMem);
       newMem = newMem.flat();
+
       this.memSize = this.memSize * 2;
       this.length = 0;
       this.memory = [];
       this.memory.length = this.memSize;
       this.rePop();
+
       for (let i = 0; i < newMem.length; i++) {
         if (newMem[i]) {
           this.set(newMem[i].key, newMem[i].value);
           this.completeLength = this.completeLength - 1;
         }
       }
-
-      return;
     }
-    return;
   }
 
   set(key, value) {
     this.completeLength = this.completeLength + 1;
-    let hash = this.hash(key);
     this.checkLoad();
+    let hash = this.hash(key);
     if (this.memory[hash].head == null) {
       this.length = this.length + 1;
     }
@@ -66,27 +66,37 @@ export class HashMap {
   }
   get(key) {
     const hash = this.hash(key);
+
     const targetList = this.memory[hash];
     if ((targetList.head.key = key)) {
       return targetList.head.value;
     }
     return targetList.findWithKey(key);
   }
-  //TODO: refactor
+
   has(key) {
-    return this.memory[this.hash(key) != undefined];
+    const hash = this.hash(key);
+
+    if (this.memory[hash].head && this.memory[hash].head.key) {
+      return true;
+    }
+    return this.memory[hash].exists(key);
   }
-  //TODO: refactor
+
   remove(key) {
-    let index = this.hash(key);
-    if (this.memory[index] == null) {
+    let hash = this.hash(key);
+    if (this.memory[hash].head == null) {
       return false;
     }
-    this.memory.splice(this.hash(key), 1);
-    this.memory.length = this.memSize;
-    this.length = this.length - 1;
-    this.completeLength = this.completeLength - 1;
-    return true;
+
+    if (this.memory[hash].find(key)) {
+      this.memory[removeAt].removeAt(find(key));
+      this.length = this.length - 1;
+      this.completeLength = this.completeLength - 1;
+      return true;
+    }
+
+    return false;
   }
   clear() {
     this.memory = [];
