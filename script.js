@@ -1,0 +1,12 @@
+import { HashMap } from "./hashMap.js";
+const myHashMap = new HashMap(0.75);
+myHashMap.set(`Uria`, 35);
+console.log(myHashMap);
+myHashMap.set(`Irina`, 32);
+console.log(myHashMap);
+myHashMap.set(`asdfgqwerty`, 32);
+console.log(myHashMap);
+myHashMap.set(`Uria`, 35);
+console.log(myHashMap);
+myHashMap.set(`Irina`, 32);
+console.log(myHashMap.memory);
