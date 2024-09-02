@@ -1,15 +1,31 @@
+import { LinkedList, Node } from "./linkedList.js";
+
 export class HashMap {
-  constructor(loadFactor) {
-    this.loadFactor = loadFactor;
+  constructor() {
+    this.loadFactor = 0.75;
     this.memory = [];
     this.length = 0;
-    this.memSize = 2;
+    this.memSize = 16;
     this.memory.length = this.memSize;
   }
   checkLoad() {
+    if (this.memory[0] == null) {
+      for (let i = 0; i < this.memory.length; i++) {
+        let ll = new LinkedList();
+        this.memory[i] = ll;
+      }
+    }
+    for (let i = 0; i < this.memory.length; i++) {
+      if (this.memory[i].head == null) {
+        console.log(`blank header ${i}`);
+      }
+    }
+
     if (this.length >= Math.ceil(this.memSize * this.loadFactor)) {
+      let newMem = [];
       this.memSize = this.memSize * 2;
-      this.memory.length = this.memSize;
+      newMem.length = this.memSize;
+      this.memory = newMem;
       return true;
     }
     return false;
@@ -26,12 +42,10 @@ export class HashMap {
   }
   set(key, value) {
     this.checkLoad();
-    if (this.memory[this.hash(key)] != null) {
-      console.log(`collision`);
-      return;
-    }
-    this.memory[this.hash(key)] = { key, value };
-    this.length = this.length + 1;
+    this.memory[this.hash(key)].append(key, value);
+
+    // this.memory[this.hash(key)] = { key, value };
+    // this.length = this.length + 1;
     return;
   }
   get(key) {
@@ -87,15 +101,3 @@ export class HashMap {
     return arr;
   }
 }
-
-const myHashMap = new HashMap(0.75);
-myHashMap.set(`Uria`, 35);
-console.log(myHashMap);
-myHashMap.set(`Irina`, 32);
-console.log(myHashMap);
-myHashMap.set(`asdfgqwerty`, 32);
-console.log(myHashMap);
-myHashMap.set(`Uria`, 35);
-console.log(myHashMap);
-myHashMap.set(`Irina`, 32);
-console.log(myHashMap);
