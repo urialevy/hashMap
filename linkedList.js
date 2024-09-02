@@ -10,13 +10,12 @@ export class LinkedList {
   constructor() {
     this.head = null;
   }
-  append(value) {
-    let newNode = new Node(value, null);
+  append(key, value) {
+    let newNode = new Node(key, value, null);
     if (this.head == null) {
       this.head = newNode;
     } else {
       let currentNode = this.head;
-
       while (currentNode) {
         if (currentNode.nextNode === null) {
           currentNode.nextNode = newNode;
@@ -26,18 +25,7 @@ export class LinkedList {
       }
     }
   }
-  prepend(value) {
-    if (this.head == null) {
-      const err = new Error(
-        `list cannot be appended with a length of less than 1`
-      );
-      throw err;
-    } else {
-      let newNode = new Node(value, null);
-      newNode.nextNode = this.head;
-      this.head = newNode;
-    }
-  }
+
   toString() {
     let res = "";
     if (this.head == null) {
