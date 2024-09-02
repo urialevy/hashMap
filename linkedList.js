@@ -1,7 +1,7 @@
 export class Node {
-  constructor(value, key, nextNode) {
-    this.value = value;
+  constructor(key, value, nextNode) {
     this.key = key;
+    this.value = value;
     this.nextNode = null;
   }
 }
@@ -38,38 +38,5 @@ export class LinkedList {
       currentNode = currentNode.nextNode;
     }
     return i;
-  }
-
-  contains(value) {
-    if (this.head == null) {
-      const err = new Error(`no nodes in list`);
-      throw err;
-    }
-
-    let currentNode = this.head;
-    while (currentNode) {
-      if (currentNode.value == value) {
-        return true;
-      }
-      currentNode = currentNode.nextNode;
-    }
-    return false;
-  }
-
-  find(value) {
-    if (this.head == null) {
-      const err = new Error(`no nodes in list`);
-      throw err;
-    }
-    let i = 0;
-    let currentNode = this.head;
-    while (currentNode) {
-      if (currentNode.value == value) {
-        return i;
-      }
-      i = i + 1;
-      currentNode = currentNode.nextNode;
-    }
-    return `"${value}" not found in list`;
   }
 }
