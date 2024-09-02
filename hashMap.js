@@ -5,45 +5,55 @@ export class HashMap {
     this.loadFactor = 0.75;
     this.memory = [];
     this.length = 0;
-    this.memSize = 9;
+    this.memSize = 8;
     this.memory.length = this.memSize;
   }
   rePop() {
     for (let i = 0; i < this.memory.length; i++) {
-      let ll = new LinkedList();
-      this.memory[i] = ll;
+      let newList = new LinkedList();
+      this.memory[i] = newList;
     }
   }
   checkLoad() {
-    if (this.memory[0] == null) {
+    if (this.memory[0] == undefined) {
       // all buckets contain a linked list - a null array necessarily means that there's not even a linked list there
       this.rePop();
     }
     if (this.length >= Math.ceil(this.memSize * this.loadFactor)) {
       let newMem = [];
+      let i = 0;
+      while (this.memory[i]) {
+        newMem.push(this.memory[i].retrieve());
+        i = i + 1;
+      }
+      newMem = newMem.flat();
       this.memSize = this.memSize * 2;
-      newMem.length = this.memSize;
-      // still need to hash newMem's entries before
-
+      this.length = 0;
+      this.memory = [];
+      this.memory.length = this.memSize;
       this.rePop();
-      this.memory = newMem;
-      return true;
+      for (let i = 0; i < newMem.length; i++) {
+        if (newMem[i]) {
+          this.set(newMem[i].key, newMem[i].value);
+        }
+      }
+
+      return;
     }
-    return false;
+    return;
   }
   hash(key) {
     let hashCode = 0;
-
     const primeNumber = 31;
     for (let i = 0; i < key.length; i++) {
       hashCode = primeNumber * hashCode + key.charCodeAt(i);
     }
-    hashCode = hashCode % this.memSize;
+    hashCode = hashCode % this.memory.length;
     return hashCode;
   }
   set(key, value) {
-    this.checkLoad();
     let hash = this.hash(key);
+    this.checkLoad();
     if (this.memory[hash].head == null) {
       this.length = this.length + 1;
     }
