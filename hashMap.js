@@ -5,26 +5,27 @@ export class HashMap {
     this.loadFactor = 0.75;
     this.memory = [];
     this.length = 0;
-    this.memSize = 16;
+    this.memSize = 9;
     this.memory.length = this.memSize;
+  }
+  rePop() {
+    for (let i = 0; i < this.memory.length; i++) {
+      let ll = new LinkedList();
+      this.memory[i] = ll;
+    }
   }
   checkLoad() {
     if (this.memory[0] == null) {
-      for (let i = 0; i < this.memory.length; i++) {
-        let ll = new LinkedList();
-        this.memory[i] = ll;
-      }
+      // all buckets contain a linked list - a null array necessarily means that there's not even a linked list there
+      this.rePop();
     }
-    for (let i = 0; i < this.memory.length; i++) {
-      if (this.memory[i].head == null) {
-        console.log(`blank header ${i}`);
-      }
-    }
-
     if (this.length >= Math.ceil(this.memSize * this.loadFactor)) {
       let newMem = [];
       this.memSize = this.memSize * 2;
       newMem.length = this.memSize;
+      // still need to hash newMem's entries before
+
+      this.rePop();
       this.memory = newMem;
       return true;
     }
@@ -42,10 +43,11 @@ export class HashMap {
   }
   set(key, value) {
     this.checkLoad();
-    this.memory[this.hash(key)].append(key, value);
-
-    // this.memory[this.hash(key)] = { key, value };
-    // this.length = this.length + 1;
+    let hash = this.hash(key);
+    if (this.memory[hash].head == null) {
+      this.length = this.length + 1;
+    }
+    this.memory[hash].append(key, value);
     return;
   }
   get(key) {
@@ -69,10 +71,12 @@ export class HashMap {
   }
   clear() {
     this.memory = [];
+    this.rePop();
+    this.length = 0;
   }
-  length() {
-    return this.length;
-  }
+  //TODO: refactor, should return the length of the entire hashmap
+  length() {}
+  //TODO: refactor, should reeturn all keys in an array
   keys() {
     let arr = [];
     for (let i = 0; i < this.memory.length; i++) {
@@ -82,6 +86,8 @@ export class HashMap {
     }
     return arr;
   }
+
+  //TODO: refactor, should reeturn all values in an array
   values() {
     let arr = [];
     for (let i = 0; i < this.memory.length; i++) {
@@ -91,6 +97,7 @@ export class HashMap {
     }
     return arr;
   }
+  //TODO: refactor, should reeturn all key-value pairs in an array
   entries() {
     let arr = [];
     for (let i = 0; i < this.memory.length; i++) {
