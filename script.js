@@ -1,5 +1,5 @@
 import { HashMap } from "./hashMap.js";
-const myHashMap = new HashMap(0.75);
+const myHashMap = new HashMap();
 myHashMap.set(`Uria`, 35);
 console.log(myHashMap);
 myHashMap.set(`Irina`, 32);
