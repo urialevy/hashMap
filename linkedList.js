@@ -45,7 +45,19 @@ export class LinkedList {
     return res;
   }
 
-  find(value) {
+  findWithKey(key) {
+    let i = 0;
+    let currentNode = this.head;
+    while (currentNode) {
+      if (currentNode.key == key) {
+        return currentNode.value;
+      }
+      currentNode = currentNode.nextNode;
+    }
+    return null;
+  }
+
+  find(key) {
     if (this.head == null) {
       const err = new Error(`no nodes in list`);
       throw err;
@@ -53,13 +65,13 @@ export class LinkedList {
     let i = 0;
     let currentNode = this.head;
     while (currentNode) {
-      if (currentNode.value == value) {
+      if (currentNode.key == key) {
         return i;
       }
       i = i + 1;
       currentNode = currentNode.nextNode;
     }
-    return `"${value}" not found in list`;
+    return `"${key}" not found in list`;
   }
   removeAt(index) {
     if (this.head == null) {
