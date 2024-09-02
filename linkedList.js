@@ -29,6 +29,21 @@ export class LinkedList {
       }
     }
   }
+  exists(key) {
+    if (this.head) {
+      if (this.head.key == key) {
+        return true;
+      }
+    }
+    let currentNode = this.head;
+    while (currentNode) {
+      if (currentNode.key == key) {
+        return true;
+      }
+      currentNode = currentNode.nextNode;
+    }
+    return false;
+  }
   retrieve() {
     let res = [];
     if (this.head == null) {
@@ -71,7 +86,7 @@ export class LinkedList {
       i = i + 1;
       currentNode = currentNode.nextNode;
     }
-    return `"${key}" not found in list`;
+    return false;
   }
   removeAt(index) {
     if (this.head == null) {
