@@ -113,7 +113,6 @@ export class HashNodeList {
       newNextNode = currentNode.nextNode;
       count = count + 1;
     }
-    const err = new Error(`index ${index} exceeds list length`);
-    throw err;
+    throw new Error(`index ${index} exceeds list length`);
   }
 }
