@@ -15,9 +15,13 @@ export class HashMap {
     for (let i = 0; i < key.length; i++) {
       hashCode = primeNumber * hashCode + key.charCodeAt(i);
     }
-    hashCode = hashCode % this.memory.length;
     return hashCode;
   }
+
+  index(hash) {
+    return hash % this.memory.length;
+  }
+
   rePop() {
     for (let i = 0; i < this.memory.length; i++) {
       let newList = new LinkedList();
@@ -62,17 +66,17 @@ export class HashMap {
   set(key, value) {
     this.completeLength = this.completeLength + 1;
     this.checkLoad();
-    let hash = this.hash(key);
-    if (this.memory[hash].head == null) {
+    let index = this.index(this.hash(key));
+    if (this.memory[index].head == null) {
       this.length = this.length + 1;
     }
-    this.memory[hash].append(key, value);
+    this.memory[index].append(key, value);
     return;
   }
   get(key) {
-    const hash = this.hash(key);
+    const index = this.index(this.hash(key));
 
-    const targetList = this.memory[hash];
+    const targetList = this.memory[index];
     if ((targetList.head.key = key)) {
       return targetList.head.value;
     }
@@ -80,21 +84,21 @@ export class HashMap {
   }
 
   has(key) {
-    const hash = this.hash(key);
+    const index = this.index(this.hash(key));
 
-    if (this.memory[hash].head && this.memory[hash].head.key) {
+    if (this.memory[index].head && this.memory[index].head.key) {
       return true;
     }
-    return this.memory[hash].exists(key);
+    return this.memory[index].exists(key);
   }
 
   remove(key) {
-    let hash = this.hash(key);
-    if (this.memory[hash].head == null) {
+    const index = this.index(this.hash(key));
+    if (this.memory[index].head == null) {
       return false;
     }
 
-    if (this.memory[hash].find(key)) {
+    if (this.memory[index].find(key)) {
       this.memory[removeAt].removeAt(find(key));
       this.length = this.length - 1;
       this.completeLength = this.completeLength - 1;
@@ -126,7 +130,6 @@ export class HashMap {
         keyArr.push(arr[i].key);
       }
     }
-
     return keyArr;
   }
 
