@@ -10,7 +10,7 @@ export class HashNodeList {
     this.head = null;
   }
   append(key) {
-    let newNode = new Node(key, null);
+    let newNode = new HashNode(key, null);
     if (this.head == null) {
       this.head = newNode;
     } else {
@@ -70,9 +70,6 @@ export class HashNodeList {
     return undefined;
   }
   findIndex(key) {
-    if (this.head == null) {
-      throw new Error(`no nodes in list`);
-    }
     let i = 0;
     let currentNode = this.head;
     while (currentNode) {
@@ -99,7 +96,6 @@ export class HashNodeList {
     while (currentNode) {
       if (count == index) {
         if (currentNode.nextNode == null) {
-          console.log(`final node`);
           previousNode.nextNode = null;
           currentNode = null;
           return;
