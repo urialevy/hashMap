@@ -24,33 +24,38 @@ export class HashMap {
       this.memory[i] = newList;
     }
   }
+  duplicateMemory() {
+    let newMem = [];
+    let i = 0;
+    while (this.memory[i]) {
+      newMem.push(this.memory[i].retrieve());
+      i = i + 1;
+    }
+    newMem = newMem.flat();
+    return newMem;
+  }
+  extendMemory(mem) {
+    this.memSize = this.memSize * 2;
+    this.length = 0;
+    this.memory = [];
+    this.memory.length = this.memSize;
+    this.completeLength = 0;
+    this.rePop();
+
+    for (let i = 0; i < mem.length; i++) {
+      if (mem[i]) {
+        this.set(mem[i].key, mem[i].value);
+      }
+    }
+  }
+
   checkLoad() {
     if (this.memory[0] == undefined) {
       // all buckets contain a linked list - a null item in the array necessarily means that there's not even a linked list there
       this.rePop();
     }
     if (this.length >= Math.ceil(this.memSize * this.loadFactor)) {
-      let newMem = [];
-      let i = 0;
-      while (this.memory[i]) {
-        newMem.push(this.memory[i].retrieve());
-        i = i + 1;
-      }
-      console.log(newMem);
-      newMem = newMem.flat();
-
-      this.memSize = this.memSize * 2;
-      this.length = 0;
-      this.memory = [];
-      this.memory.length = this.memSize;
-      this.rePop();
-
-      for (let i = 0; i < newMem.length; i++) {
-        if (newMem[i]) {
-          this.set(newMem[i].key, newMem[i].value);
-          this.completeLength = this.completeLength - 1;
-        }
-      }
+      this.extendMemory(this.duplicateMemory());
     }
   }
 
