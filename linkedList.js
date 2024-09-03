@@ -69,7 +69,7 @@ export class LinkedList {
       }
       currentNode = currentNode.nextNode;
     }
-    return null;
+    return undefined;
   }
 
   find(key) {
