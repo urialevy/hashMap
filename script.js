@@ -1,22 +1,4 @@
 import { HashMap } from "./hashMap.js";
-const test = new HashMap();
-test.set("apple", "red");
-test.set("banana", "yellow");
-test.set("carrot", "orange");
-test.set("dog", "brown");
-test.set("elephant", "gray");
-test.set("frog", "green");
-test.set("grape", "purple");
-test.set("hat", "black");
-test.set("ice cream", "white");
-test.set("jacket", "blue");
-test.set("kite", "pink");
-test.set("lion", "golden");
-test.set("moon", "silver");
-// console.log(test.entries());
-// console.log(test.memory);
-// console.log(test.checkLength());
-
 const testData = [
   { key: "key1", value: "value1" },
   { key: "key2", value: "value2" },
@@ -40,10 +22,10 @@ const testData = [
   { key: "key20", value: "value20" },
 ];
 
-const test2 = new HashMap();
+const test = new HashMap();
 for (let i = 0; i < testData.length; i++) {
-  test2.set(testData[i].key, testData[i].value);
+  test.set(testData[i].key, testData[i].value);
 }
 
-console.log(test2.get("key-25")); // should return undefined
-console.log(test2.entries());
+console.log(test.get("key-25")); // should return undefined
+console.log(test.entries());
