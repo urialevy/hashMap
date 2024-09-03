@@ -71,15 +71,15 @@ export class HashMap {
       this.length = this.length + 1;
     }
     this.memory[index].append(key, value);
-    return;
   }
   get(key) {
     const index = this.index(this.hash(key));
-
     const targetList = this.memory[index];
-    if ((targetList.head.key = key)) {
+    console.log(targetList);
+    if (targetList.head && targetList.head.key == key) {
       return targetList.head.value;
     }
+
     return targetList.findWithKey(key);
   }
 
