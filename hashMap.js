@@ -8,7 +8,9 @@ export class HashMap {
     this.memSize = 16;
     this.memory.length = this.memSize;
     this.completeLength = 0;
+    this.rePop();
   }
+
   hash(key) {
     let hashCode = 0;
     const primeNumber = 31;
@@ -75,7 +77,6 @@ export class HashMap {
   get(key) {
     const index = this.index(this.hash(key));
     const targetList = this.memory[index];
-    console.log(targetList);
     if (targetList.head && targetList.head.key == key) {
       return targetList.head.value;
     }
