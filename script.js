@@ -27,5 +27,8 @@ for (let i = 0; i < testData.length; i++) {
   test.set(testData[i].key, testData[i].value);
 }
 
-console.log(test.get("key-25")); // should return undefined
-console.log(test.entries());
+//TEST: empty hashmap
+const test2 = new HashMap();
+console.log(test2.get("derp"));
+console.log(test2.has("derp"));
+console.log(test2.remove("derp"));
