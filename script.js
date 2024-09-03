@@ -1,4 +1,5 @@
 import { HashMap } from "./hashMap.js";
+import { HashSet } from "./Hash-set.js";
 const testData = [
   { key: "key1", value: "value1" },
   { key: "key2", value: "value2" },
@@ -32,3 +33,33 @@ const test2 = new HashMap();
 console.log(test2.get("derp"));
 console.log(test2.has("derp"));
 console.log(test2.remove("derp"));
+
+const testSetData = [
+  "apple",
+  "banana",
+  "cherry",
+  "date",
+  "elderberry",
+  "fig",
+  "grape",
+  "honeydew",
+  "kiwi",
+  "lemon",
+  "mango",
+  "nectarine",
+  "orange",
+  "papaya",
+  "quince",
+  "raspberry",
+  "strawberry",
+  "tangerine",
+  "ugli",
+  "watermelon",
+];
+
+const testSet = new HashSet();
+
+for (let i = 0; i < testSetData.length; i++) {
+  testSet.set(testSetData[i]);
+}
+console.log(testSet.entries());
